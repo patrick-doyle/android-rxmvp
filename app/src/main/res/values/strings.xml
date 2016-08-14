@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Reddit Rsvp</string>
+    <string name="post_thumbnail">post_thumbnail</string>
+    <string name="refresh">Refresh</string>
+</resources>
