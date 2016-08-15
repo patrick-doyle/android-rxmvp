@@ -51,7 +51,7 @@ public class DefaultLoginView extends FrameLayout implements LoginView {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true); // Enable Javascript.
         webSettings.setAllowFileAccessFromFileURLs(true); // Enable HTML Imports to access file://.
-        webView.loadUrl("file:///android_asset/login.html");
+        webView.loadUrl("file:///android_asset/polymer/login.html");
         webView.addJavascriptInterface(usernameBridge, "UsernameBridge");
         webView.addJavascriptInterface(passwordBridge, "PasswordBridge");
         webView.addJavascriptInterface(loginButtonBridge, "LoginButtonBridge");
