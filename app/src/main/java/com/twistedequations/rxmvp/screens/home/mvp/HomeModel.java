@@ -5,6 +5,7 @@ import com.twistedequations.rxmvp.screens.home.HomeActivity;
 import com.twistedequations.rxmvp.reddit.RedditService;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
 import com.twistedequations.rxmvp.reddit.models.RedditListing;
+import com.twistedequations.rxmvp.screens.login.LoginActivity;
 import com.twistedequations.rxstate.RxSaveState;
 
 import rx.Observable;
@@ -35,5 +36,9 @@ import rx.Observable;
 
         public void startDetailActivity(RedditItem item) {
             PostActivity.start(homeActivity, item);
+        }
+
+        public void startLoginActivity() {
+            LoginActivity.start(homeActivity);
         }
     }

@@ -3,6 +3,8 @@ package com.twistedequations.rxmvp.app;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
+import android.os.Build;
+import android.webkit.WebView;
 
 import com.twistedequations.rxmvp.app.builder.DaggerRxMvpAppComponent;
 import com.twistedequations.rxmvp.app.builder.RxMvpAppComponent;
@@ -23,7 +25,9 @@ public class RxMvpApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
     }
 
     public RxMvpAppComponent component() {

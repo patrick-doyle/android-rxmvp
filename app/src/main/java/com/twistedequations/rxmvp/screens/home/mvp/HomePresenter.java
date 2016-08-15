@@ -25,6 +25,7 @@ public class HomePresenter {
     public void onCreate() {
         compositeSubscription.add(loadPostsSubscription());
         compositeSubscription.add(loadCommentsSubscription());
+        compositeSubscription.add(loginClickSubscription());
     }
 
     public void onDestroy() {
@@ -64,6 +65,11 @@ public class HomePresenter {
     private Subscription loadCommentsSubscription() {
         return homeView.listItemClicks()
                 .subscribe(homeModel::startDetailActivity);
+    }
+
+    private Subscription loginClickSubscription() {
+        return homeView.loginClick()
+                .subscribe(aVoid -> homeModel.startLoginActivity());
     }
 
 }

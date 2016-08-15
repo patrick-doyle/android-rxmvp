@@ -1,7 +1,7 @@
 package com.twistedequations.reddit.rsvp.screens.home.mvl;
 
-import com.twistedequations.mvl.rx.AndroidSchedulers;
-import com.twistedequations.mvl.rx.TestAndroidSchedulers;
+import com.twistedequations.mvl.rx.AndroidRxSchedulers;
+import com.twistedequations.mvl.rx.TestAndroidRxSchedulers;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
 import com.twistedequations.rxmvp.reddit.models.RedditListing;
 import com.twistedequations.rxmvp.screens.home.mvp.HomeModel;
@@ -33,7 +33,7 @@ public class HomePresenterTest {
     private HomeView view;
 
     //TestAndroidSchedulers that force everything onto the current thread
-    private AndroidSchedulers schedulers = new TestAndroidSchedulers();
+    private AndroidRxSchedulers schedulers = new TestAndroidRxSchedulers();
 
     //Test data to be loaded from the resources folder
     private RedditListing testPostJson;

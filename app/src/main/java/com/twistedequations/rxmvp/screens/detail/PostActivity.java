@@ -10,8 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.twistedequations.rxmvp.app.RxMvpApp;
 import com.twistedequations.rxmvp.screens.detail.dagger.DaggerPostActivityComponent;
 import com.twistedequations.rxmvp.screens.detail.dagger.PostModule;
-import com.twistedequations.rxmvp.screens.detail.mvl.DefaultPostView;
-import com.twistedequations.rxmvp.screens.detail.mvl.PostPresenter;
+import com.twistedequations.rxmvp.screens.detail.mvp.DefaultPostView;
+import com.twistedequations.rxmvp.screens.detail.mvp.PostPresenter;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
 
 import javax.inject.Inject;

@@ -5,9 +5,9 @@ import com.twistedequations.mvl.rx.AndroidRxSchedulers;
 import com.twistedequations.mvl.rx.TestAndroidRxSchedulers;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
 import com.twistedequations.rxmvp.reddit.models.RedditListing;
-import com.twistedequations.rxmvp.screens.detail.mvl.DefaultPostView;
-import com.twistedequations.rxmvp.screens.detail.mvl.PostModel;
-import com.twistedequations.rxmvp.screens.detail.mvl.PostPresenter;
+import com.twistedequations.rxmvp.screens.detail.mvp.DefaultPostView;
+import com.twistedequations.rxmvp.screens.detail.mvp.PostModel;
+import com.twistedequations.rxmvp.screens.detail.mvp.PostPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -13,6 +13,8 @@ public interface HomeView {
 
     Observable<Void> refreshMenuClick();
 
+    Observable<Void> loginClick();
+
     Observable<Void> errorRetryClick();
 
     Observable<RedditItem> listItemClicks();

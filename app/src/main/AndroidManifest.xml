@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".screens.detail.PostActivity"/>
+        <activity android:name=".screens.login.LoginActivity"/>
 
     </application>
 

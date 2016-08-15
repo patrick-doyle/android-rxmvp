@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="file:///android_asset/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="file:///android_asset/rxjs.js"></script>
+    <script src="file:///android_asset/rx-dom.js"></script>
+    <script src="file:///android_asset/rx-async.js"></script>
+    <script src="file:///android_asset/rx-binding.js"></script>
+
+    <link rel="import" href="file:///android_asset/bower_components/polymer/polymer.html">
+    <link rel="import" href="file:///android_asset/normalise.css">
+    <link rel="import"
+          href="file:///android_asset/bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="file:///android_asset/bower_components/paper-input/paper-input.html">
+    <link rel="import" href="file:///android_asset/bower_components/paper-button/paper-button.html">
+    <link rel="import"
+          href="file:///android_asset/bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import"
+          href="file:///android_asset/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+    <style>
+        body {
+        margin : 0;
+        padding:0;
+        }
+        .form {
+        padding: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="fullbleed">
+
+<paper-toolbar>
+    <div class="title">Login</div>
+</paper-toolbar>
+
+<div class="form">
+    <paper-input id="username" label="Username"></paper-input>
+    <paper-input id="password" label="Password"></paper-input>
+
+    <paper-button id="login" raised>Login</paper-button>
+</div>
+
+<script>
+       var loginButton = document.getElementById("login");
+       Rx.Observable.fromEvent(loginButton, 'click').subscribe(
+          function(i){
+            console.log("read");
+            LoginButtonBridge.onNext(i);
+          },
+          function(e){
+            console.log(e);
+            LoginButtonBridge.onError(e);
+          },
+          function(){
+            console.log("done");
+            LoginButtonBridge.onCompleted();
+          }
+        );
+
+       var usernameField = document.getElementById("username");
+       Rx.Observable.fromEvent(usernameField, 'input').subscribe(
+          function(i){
+            console.log(i.target.bindValue);
+            UsernameBridge.onNext(i.target.bindValue);
+          },
+          function(e){
+            console.log(e);
+            UsernameBridge.onError(e);
+          },
+          function(){
+            console.log("done");
+            UsernameBridge.onCompleted();
+          }
+        );
+
+       var passwordField = document.getElementById("password");
+       Rx.Observable.fromEvent(passwordField, 'input').subscribe(
+          function(i){
+            console.log(i.target.bindValue);
+            PasswordBridge.onNext(i.target.bindValue);
+          },
+          function(e){
+            console.log(e);
+            PasswordBridge.onError(e);
+          },
+          function(){
+            console.log("done");
+            PasswordBridge.onCompleted();
+          }
+        );
+
+</script>
+</body>
+</html>

@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_login"
+        android:title="@string/login"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/menu_refresh"
         android:icon="@drawable/ic_refresh"
         android:title="@string/refresh"
+        android:orderInCategory="2"
         app:showAsAction="ifRoom"/>
 </menu>
