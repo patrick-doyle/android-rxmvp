@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,19 +20,23 @@ import com.twistedequations.rxmvp.reddit.models.RedditItem;
 
 import java.util.List;
 
+import kotlin.Lazy;
+import kotlin.LazyKt;
+import kotlin.jvm.functions.Function0;
 import rx.Observable;
 
 public class DefaultHomeView extends FrameLayout implements HomeView {
 
     private final PostListAdapter postListAdapter;
-    private final ProgressDialog progressDialog;
     private final Toolbar toolbar;
-    private final AlertDialog alertDialog;
+    private final Lazy<AlertDialog> alertDialog;
+    private final Lazy<ProgressDialog> progressDialog;
     private final PublishRelay<Void> errorRetryRelay = PublishRelay.create();
     private final Observable<MenuItem> menuClicksObs;
 
     public DefaultHomeView(HomeActivity homeActivity, Picasso picasso) {
         super(homeActivity);
+        //Inflate the layout into the viewgroup
         inflate(getContext(), R.layout.activity_home, this);
 
         postListAdapter = new PostListAdapter(homeActivity, picasso);
@@ -43,17 +48,28 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
         toolbar.inflateMenu(R.menu.menu_home);
         menuClicksObs = RxToolbar.itemClicks(toolbar).publish().autoConnect();
 
-        progressDialog = new ProgressDialog(homeActivity);
-        progressDialog.setMessage("Loading");
+        //Using kotin lazy from java to create this at a later time
+        progressDialog = LazyKt.lazy(() -> {
+            ProgressDialog progressDialog = new ProgressDialog(homeActivity);
+            progressDialog.setMessage("Loading");
+            return progressDialog;
+        });
 
-        alertDialog = new AlertDialog.Builder(homeActivity)
-                .setTitle("Error Loading reddit posts")
-                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss())
-                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                    errorRetryRelay.call(null);
-                })
-                .create();
+        //Using kotin lazy from java to create this at a later time
+        alertDialog = LazyKt.lazy(new Function0<AlertDialog>() {
+            @Override
+            public AlertDialog invoke() {
+                return new AlertDialog.Builder(homeActivity)
+                        .setTitle("Error Loading reddit posts")
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                        .setNegativeButton("retry", (dialogInterface, i) -> {
+                            dialogInterface.dismiss();
+                            errorRetryRelay.call(null);
+                        })
+                        .create();
+            }
+        });
+
     } //View init stuff
 
     @Override
@@ -87,20 +103,20 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
     @Override
     public void setLoading(boolean loading) {
         if (loading) {
-            progressDialog.show();
+            progressDialog.getValue().show();
         } else {
-            progressDialog.dismiss();
+            progressDialog.getValue().dismiss();
         }
     }
 
     @Override
     public void showError() {
-        alertDialog.show();
-        progressDialog.dismiss();
+        alertDialog.getValue().show();
+        progressDialog.getValue().dismiss();
     }
 
     @Override
     public View getView() {
-        return this;
+        return this; //Because android
     }
 }

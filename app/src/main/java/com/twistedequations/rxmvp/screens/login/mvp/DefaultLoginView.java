@@ -59,8 +59,7 @@ public class DefaultLoginView extends FrameLayout implements LoginView {
 
     @Override
     public Observable<Void> loginObs() {
-        return Observable.create(loginButtonBridge)
-                .map(s -> null);
+        return Observable.create(loginButtonBridge).map(s -> null);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.twistedequations.rxmvp.screens.home.mvp;
 
+import android.util.Log;
+
 import com.twistedequations.mvl.rx.AndroidRxSchedulers;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
+import com.twistedequations.rxmvp.reddit.models.RedditListing;
 
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -23,7 +27,8 @@ public class HomePresenter {
     }
 
     public void onCreate() {
-        compositeSubscription.add(loadPostsSubscription());
+        compositeSubscription.add(loadStartPostsSubscription());
+        compositeSubscription.add(refreshPostsSubscription());
         compositeSubscription.add(loadCommentsSubscription());
         compositeSubscription.add(loginClickSubscription());
     }
@@ -37,12 +42,15 @@ public class HomePresenter {
         return Observable.just(null)
                 .doOnNext(notification -> homeView.setLoading(true))
 
-                .switchMap(aVoid -> homeModel.getSavedRedditListing()
-                        .concatWith(homeModel.postsForAll()
-                                .subscribeOn(androidSchedulers.network())
-                                .observeOn(androidSchedulers.mainThread())
-                                .map(homeModel::saveRedditListing)))
+                .switchMap(aVoid -> homeModel.getSavedRedditListing() //get the listing from the saved state
+                        .switchIfEmpty(homeModel.postsForAll() //switch to the network and get the listing from there if
+                        //there is no saved state
+                        .subscribeOn(androidSchedulers.network())
+                        .observeOn(androidSchedulers.mainThread())
+                        .map(homeModel::saveRedditListing)))// update the saved state with the network data
 
+                //Mapping reddit data to the correct form for display
+                .observeOn(androidSchedulers.io())
                 .map(redditData -> redditData.data.children)
                 .flatMap(redditItems -> Observable.from(redditItems)
                         .map(child -> child.data)
@@ -50,16 +58,30 @@ public class HomePresenter {
                         .toList())
 
                 .observeOn(androidSchedulers.mainThread())
-                .doOnNext(notification -> homeView.setLoading(false));
+                .doOnNext(notification -> homeView.setLoading(false))
+                .doOnError(throwable -> {
+                    throwable.printStackTrace(); //Log errors
+                    homeView.showError(); // show error dialog on error
+                })
+                .onErrorReturn(throwable -> Collections.emptyList()); // eat the error and return an empty list
     }
 
-    private Subscription loadPostsSubscription() {
-        return Observable.just(null)
-                .mergeWith(homeView.refreshMenuClick())
-                .mergeWith(homeView.errorRetryClick())
-                .flatMap(aVoid -> loadRedditItems())
-                .doOnError(Throwable::printStackTrace)
-                .subscribe(homeView::setRedditItems, throwable -> homeView.showError());
+    private Subscription loadStartPostsSubscription() {
+        return Observable.just(null) //inital load
+                .flatMap(aVoid -> loadRedditItems()) //get the reddit data from network
+                .doOnError(throwable -> {
+                    throwable.printStackTrace(); //Log errors
+                    homeView.showError(); // show error dialog on error
+                })
+                .subscribe(homeView::setRedditItems); // display data
+    }
+
+    private Subscription refreshPostsSubscription() {
+        return homeView.refreshMenuClick()//merged with menu clicks
+                .mergeWith(homeView.errorRetryClick()) //merged with retry clicks
+                .flatMap(aVoid -> loadRedditItems()) //get the reddit data from network
+                .doOnEach(notification -> Log.i("TAG", "notification = " + notification))
+                .subscribe(homeView::setRedditItems); // display data
     }
 
     private Subscription loadCommentsSubscription() {
