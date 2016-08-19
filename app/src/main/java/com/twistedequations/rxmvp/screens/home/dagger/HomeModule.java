@@ -2,12 +2,12 @@ package com.twistedequations.rxmvp.screens.home.dagger;
 
 import com.squareup.picasso.Picasso;
 import com.twistedequations.mvl.rx.AndroidRxSchedulers;
+import com.twistedequations.rxmvp.reddit.RedditService;
 import com.twistedequations.rxmvp.screens.home.HomeActivity;
 import com.twistedequations.rxmvp.screens.home.mvp.DefaultHomeView;
 import com.twistedequations.rxmvp.screens.home.mvp.HomeModel;
 import com.twistedequations.rxmvp.screens.home.mvp.HomePresenter;
 import com.twistedequations.rxmvp.screens.home.mvp.HomeView;
-import com.twistedequations.rxmvp.reddit.RedditService;
 
 import dagger.Module;
 import dagger.Provides;

@@ -1,8 +1,8 @@
 package com.twistedequations.rxmvp.screens.detail.dagger;
 
 
-import com.twistedequations.rxmvp.screens.detail.PostActivity;
 import com.twistedequations.rxmvp.app.builder.RxMvpAppComponent;
+import com.twistedequations.rxmvp.screens.detail.PostActivity;
 
 import dagger.Component;
 

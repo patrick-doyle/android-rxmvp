@@ -22,7 +22,7 @@ public class NetworkModule {
     @AppScope
     @Provides
     public OkHttpClient okHttpClient(HttpLoggingInterceptor loggingInterceptor, Cache cache) {
-        return  new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addNetworkInterceptor(loggingInterceptor)
                 .cache(cache)
                 .build();

@@ -1,4 +1,3 @@
-
 package com.twistedequations.rxmvp.reddit.models;
 
 import android.os.Parcel;

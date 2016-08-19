@@ -6,10 +6,10 @@ import android.widget.ListView;
 
 import com.squareup.picasso.Picasso;
 import com.twistedequations.rxmvp.R;
+import com.twistedequations.rxmvp.reddit.models.RedditItem;
 import com.twistedequations.rxmvp.screens.detail.PostActivity;
 import com.twistedequations.rxmvp.screens.detail.mvp.view.CommentListAdapter;
 import com.twistedequations.rxmvp.screens.detail.mvp.view.RedditPostView;
-import com.twistedequations.rxmvp.reddit.models.RedditItem;
 
 import java.util.List;
 

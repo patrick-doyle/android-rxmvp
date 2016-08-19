@@ -1,4 +1,3 @@
-
 package com.twistedequations.rxmvp.reddit.models;
 
 import android.os.Parcel;
@@ -25,9 +24,9 @@ public class Data implements Parcelable {
     @Override
     public String toString() {
         return "Data{" +
-            "modhash='" + modhash + '\'' +
-            ", children=" + children +
-            '}';
+                "modhash='" + modhash + '\'' +
+                ", children=" + children +
+                '}';
     }
 
     @Override

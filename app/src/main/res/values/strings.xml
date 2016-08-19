@@ -3,4 +3,16 @@
     <string name="post_thumbnail">post_thumbnail</string>
     <string name="refresh">Refresh</string>
     <string name="login">Login</string>
+    <string name="profile">Profile</string>
+    <string name="user_profile">User Profile</string>
+
+    <string name="user_username">Username %s</string>
+    <string name="user_is_friend">Is friend %s</string>
+    <string name="user_created_utc">User since %s</string>
+    <string name="user_link_karma">Link karma %s</string>
+    <string name="user_comment_karma">Comment karma %s</string>
+    <string name="user_is_mod">Is mod %s</string>
+    <string name="user_is_gold">Is gilded %s</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

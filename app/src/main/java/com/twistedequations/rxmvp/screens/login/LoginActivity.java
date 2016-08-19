@@ -2,13 +2,10 @@ package com.twistedequations.rxmvp.screens.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebView;
 
-import com.twistedequations.rxmvp.reddit.models.RedditItem;
 import com.twistedequations.rxmvp.screens.login.builder.DaggerLoginComponent;
 import com.twistedequations.rxmvp.screens.login.builder.LoginModule;
 import com.twistedequations.rxmvp.screens.login.mvp.LoginPresenter;

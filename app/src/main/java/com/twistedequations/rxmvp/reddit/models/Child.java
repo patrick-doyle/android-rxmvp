@@ -1,4 +1,3 @@
-
 package com.twistedequations.rxmvp.reddit.models;
 
 import android.os.Parcel;
@@ -12,40 +11,40 @@ import javax.annotation.Generated;
 @Generated("org.jsonschema2pojo")
 public class Child implements Parcelable {
 
-  @SerializedName("kind")
-  @Expose
-  public String kind;
-  @SerializedName("data")
-  @Expose
-  public RedditItem data;
+    @SerializedName("kind")
+    @Expose
+    public String kind;
+    @SerializedName("data")
+    @Expose
+    public RedditItem data;
 
-  public Child() {
-  }
+    public Child() {
+    }
 
-  protected Child(Parcel in) {
-    kind = in.readString();
-  }
+    protected Child(Parcel in) {
+        kind = in.readString();
+    }
 
-  public static final Creator<Child> CREATOR = new Creator<Child>() {
+    public static final Creator<Child> CREATOR = new Creator<Child>() {
+        @Override
+        public Child createFromParcel(Parcel in) {
+            return new Child(in);
+        }
+
+        @Override
+        public Child[] newArray(int size) {
+            return new Child[size];
+        }
+    };
+
     @Override
-    public Child createFromParcel(Parcel in) {
-      return new Child(in);
+    public int describeContents() {
+        return 0;
     }
 
     @Override
-    public Child[] newArray(int size) {
-      return new Child[size];
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(kind);
     }
-  };
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel parcel, int i) {
-    parcel.writeString(kind);
-  }
 
 }

@@ -68,5 +68,7 @@ public class PostPresenter {
         compositeSubscription.add(postSub);
         compositeSubscription.add(commentSub);
         return compositeSubscription;
-    };
+    }
+
+    ;
 }

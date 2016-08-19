@@ -2,11 +2,11 @@ package com.twistedequations.rxmvp.screens.detail.dagger;
 
 import com.squareup.picasso.Picasso;
 import com.twistedequations.mvl.rx.AndroidRxSchedulers;
+import com.twistedequations.rxmvp.reddit.RedditService;
 import com.twistedequations.rxmvp.screens.detail.PostActivity;
 import com.twistedequations.rxmvp.screens.detail.mvp.DefaultPostView;
 import com.twistedequations.rxmvp.screens.detail.mvp.PostModel;
 import com.twistedequations.rxmvp.screens.detail.mvp.PostPresenter;
-import com.twistedequations.rxmvp.reddit.RedditService;
 
 import dagger.Module;
 import dagger.Provides;

@@ -5,7 +5,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,9 +13,9 @@ import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 import com.jakewharton.rxrelay.PublishRelay;
 import com.squareup.picasso.Picasso;
 import com.twistedequations.rxmvp.R;
+import com.twistedequations.rxmvp.reddit.models.RedditItem;
 import com.twistedequations.rxmvp.screens.home.HomeActivity;
 import com.twistedequations.rxmvp.screens.home.mvp.view.PostListAdapter;
-import com.twistedequations.rxmvp.reddit.models.RedditItem;
 
 import java.util.List;
 
@@ -75,6 +74,12 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
     @Override
     public Observable<Void> refreshMenuClick() {
         return menuClicksObs.filter(menuItem -> menuItem.getItemId() == R.id.menu_refresh)
+                .map(menuItem -> null);
+    }
+
+    @Override
+    public Observable<Void> profileMenuClick() {
+        return menuClicksObs.filter(menuItem -> menuItem.getItemId() == R.id.menu_profile)
                 .map(menuItem -> null);
     }
 

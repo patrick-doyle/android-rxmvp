@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.twistedequations.mvl.rx.AndroidRxSchedulers;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
-import com.twistedequations.rxmvp.reddit.models.RedditListing;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +30,7 @@ public class HomePresenter {
         compositeSubscription.add(refreshPostsSubscription());
         compositeSubscription.add(loadCommentsSubscription());
         compositeSubscription.add(loginClickSubscription());
+        compositeSubscription.add(profileClickSubscription());
     }
 
     public void onDestroy() {
@@ -44,10 +44,10 @@ public class HomePresenter {
 
                 .switchMap(aVoid -> homeModel.getSavedRedditListing() //get the listing from the saved state
                         .switchIfEmpty(homeModel.postsForAll() //switch to the network and get the listing from there if
-                        //there is no saved state
-                        .subscribeOn(androidSchedulers.network())
-                        .observeOn(androidSchedulers.mainThread())
-                        .map(homeModel::saveRedditListing)))// update the saved state with the network data
+                                //there is no saved state
+                                .subscribeOn(androidSchedulers.network())
+                                .observeOn(androidSchedulers.mainThread())
+                                .map(homeModel::saveRedditListing)))// update the saved state with the network data
 
                 //Mapping reddit data to the correct form for display
                 .observeOn(androidSchedulers.io())
@@ -87,6 +87,11 @@ public class HomePresenter {
     private Subscription loadCommentsSubscription() {
         return homeView.listItemClicks()
                 .subscribe(homeModel::startDetailActivity);
+    }
+
+    private Subscription profileClickSubscription() {
+        return homeView.profileMenuClick()
+                .subscribe(aVoid -> homeModel.startProfileActivity());
     }
 
     private Subscription loginClickSubscription() {

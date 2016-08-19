@@ -2,7 +2,6 @@ package com.twistedequations.rxmvp.screens.login.mvp;
 
 import android.view.View;
 
-
 import rx.Observable;
 
 public interface LoginView {
