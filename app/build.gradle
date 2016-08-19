@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-android'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 24
@@ -88,17 +88,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile group: 'com.google.truth', name: 'truth', version: '0.28'
     testCompile group: 'org.mockito', name :'mockito-core', version: '1.10.19'
-
-    androidTestCompile 'com.android.support:support-annotations:24.0.0'
-    androidTestCompile 'com.android.support.test:runner:0.3'
-    androidTestCompile 'com.android.support.test:rules:0.3'
-    androidTestCompile 'junit:junit:4.12'
-    androidTestCompile group: 'com.google.truth', name: 'truth', version: '0.28'
-    androidTestCompile group: 'org.mockito', name :'mockito-core', version: '1.10.19'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
-    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1'){
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude module: 'recyclerview-v7'
-    }
 }

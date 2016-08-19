@@ -1,2 +1,3 @@
 # android-rxmvp
-Rx based version of mvp
+
+Sample implementation of the RxMvp 
