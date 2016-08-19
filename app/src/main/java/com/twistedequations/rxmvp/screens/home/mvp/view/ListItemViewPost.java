@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.twistedequations.rxmvp.R;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ListItemViewPost extends FrameLayout {
 
@@ -38,11 +42,23 @@ public class ListItemViewPost extends FrameLayout {
         init();
     }
 
-    private TextView title;
-    private TextView description;
-    private TextView upVotes;
-    private TextView subreddit;
-    private ImageView postImage;
+    @BindView(R.id.post_title)
+    TextView title;
+
+    @BindView(R.id.post_description)
+    TextView description;
+
+    @BindView(R.id.post_upvotes_count)
+    TextView upVotes;
+
+    @BindView(R.id.post_user)
+    TextView postUser;
+
+    @BindView(R.id.post_subreddit)
+    TextView subreddit;
+
+    @BindView(R.id.post_image)
+    ImageView postImage;
 
     private void init() {
         inflate(getContext(), R.layout.list_item_post, this);
@@ -52,12 +68,11 @@ public class ListItemViewPost extends FrameLayout {
         ta.recycle();
 
         setForeground(selectableItemBackground);
+        ButterKnife.bind(this);
+    }
 
-        title = (TextView) findViewById(R.id.post_title);
-        description = (TextView) findViewById(R.id.post_description);
-        upVotes = (TextView) findViewById(R.id.post_upvotes_count);
-        subreddit = (TextView) findViewById(R.id.post_subreddit);
-        postImage = (ImageView) findViewById(R.id.post_image);
+    public void setOnAuthorClickListener(OnClickListener l) {
+        postUser.setOnClickListener(l);
     }
 
     public void setRedditItem(RedditItem redditItem, Picasso picasso) {
@@ -65,6 +80,7 @@ public class ListItemViewPost extends FrameLayout {
         description.setText(redditItem.selftext);
         upVotes.setText(String.format("%s", redditItem.score));
         subreddit.setText(redditItem.subreddit);
+        postUser.setText(redditItem.author);
 
         if (URLUtil.isValidUrl(redditItem.thumbnail)) {
             postImage.setVisibility(VISIBLE);

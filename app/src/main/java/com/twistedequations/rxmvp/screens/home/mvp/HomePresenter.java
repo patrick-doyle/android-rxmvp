@@ -1,7 +1,5 @@
 package com.twistedequations.rxmvp.screens.home.mvp;
 
-import android.util.Log;
-
 import com.twistedequations.mvl.rx.AndroidRxSchedulers;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
 
@@ -30,7 +28,7 @@ public class HomePresenter {
         compositeSubscription.add(refreshPostsSubscription());
         compositeSubscription.add(loadCommentsSubscription());
         compositeSubscription.add(loginClickSubscription());
-        compositeSubscription.add(profileClickSubscription());
+        compositeSubscription.add(authorClickSubscription());
     }
 
     public void onDestroy() {
@@ -80,7 +78,6 @@ public class HomePresenter {
         return homeView.refreshMenuClick()//merged with menu clicks
                 .mergeWith(homeView.errorRetryClick()) //merged with retry clicks
                 .flatMap(aVoid -> loadRedditItems()) //get the reddit data from network
-                .doOnEach(notification -> Log.i("TAG", "notification = " + notification))
                 .subscribe(homeView::setRedditItems); // display data
     }
 
@@ -88,15 +85,14 @@ public class HomePresenter {
         return homeView.listItemClicks()
                 .subscribe(homeModel::startDetailActivity);
     }
-
-    private Subscription profileClickSubscription() {
-        return homeView.profileMenuClick()
-                .subscribe(aVoid -> homeModel.startProfileActivity());
-    }
-
     private Subscription loginClickSubscription() {
         return homeView.loginClick()
                 .subscribe(aVoid -> homeModel.startLoginActivity());
+    }
+
+    private Subscription authorClickSubscription() {
+        return homeView.postAuthorClick()
+                .subscribe(homeModel::startProfileActivity);
     }
 
 }

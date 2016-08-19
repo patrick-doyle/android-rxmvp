@@ -43,7 +43,7 @@ public class HomeModel {
         LoginActivity.start(homeActivity);
     }
 
-    public void startProfileActivity() {
-        ProfileActivity.Companion.start(homeActivity, "twistedequations");
+    public void startProfileActivity(String username) {
+        ProfileActivity.Companion.start(homeActivity, username);
     }
 }

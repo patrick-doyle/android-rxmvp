@@ -13,10 +13,4 @@
         android:title="@string/refresh"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/menu_profile"
-        android:title="@string/profile"
-        android:orderInCategory="2"
-        app:showAsAction="ifRoom"/>
 </menu>

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.twistedequations.rxmvp.R;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
 
+import butterknife.BindView;
+
 public class ListItemCommentView extends FrameLayout {
 
     public ListItemCommentView(Context context) {
@@ -33,17 +35,25 @@ public class ListItemCommentView extends FrameLayout {
         init();
     }
 
-    private TextView description;
-    private TextView upVotes;
+    @BindView(R.id.post_description)
+    TextView description;
+
+    @BindView(R.id.post_upvotes_count)
+    TextView upVotes;
+
+    @BindView(R.id.comment_author)
+    TextView commentAuthor;
 
     private void init() {
         inflate(getContext(), R.layout.list_item_comment, this);
-        description = (TextView) findViewById(R.id.post_description);
-        upVotes = (TextView) findViewById(R.id.post_upvotes_count);
+        description = (TextView) findViewById(R.id.comment_description);
+        upVotes = (TextView) findViewById(R.id.comment_points_count);
+        commentAuthor = (TextView) findViewById(R.id.comment_author);
     }
 
     public void setRedditItem(RedditItem redditItem) {
         description.setText(redditItem.body);
         upVotes.setText(String.format("%s", redditItem.score));
+        commentAuthor.setText(redditItem.author);
     }
 }

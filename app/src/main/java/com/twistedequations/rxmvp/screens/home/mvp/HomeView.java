@@ -12,8 +12,6 @@ public interface HomeView {
 
     Observable<Void> refreshMenuClick();
 
-    Observable<Void> profileMenuClick();
-
     Observable<Void> loginClick();
 
     Observable<Void> errorRetryClick();
@@ -28,6 +26,7 @@ public interface HomeView {
 
     View getView();
 
+    Observable<String> postAuthorClick();
 }
 
 

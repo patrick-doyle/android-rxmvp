@@ -47,26 +47,23 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
         toolbar.inflateMenu(R.menu.menu_home);
         menuClicksObs = RxToolbar.itemClicks(toolbar).publish().autoConnect();
 
-        //Using kotin lazy from java to create this at a later time
+        //Using kotin lazy in java to create this at a later time
         progressDialog = LazyKt.lazy(() -> {
             ProgressDialog progressDialog = new ProgressDialog(homeActivity);
             progressDialog.setMessage("Loading");
             return progressDialog;
         });
 
-        //Using kotin lazy from java to create this at a later time
-        alertDialog = LazyKt.lazy(new Function0<AlertDialog>() {
-            @Override
-            public AlertDialog invoke() {
-                return new AlertDialog.Builder(homeActivity)
-                        .setTitle("Error Loading reddit posts")
-                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss())
-                        .setNegativeButton("retry", (dialogInterface, i) -> {
-                            dialogInterface.dismiss();
-                            errorRetryRelay.call(null);
-                        })
-                        .create();
-            }
+        //Using kotin lazy in java to create this at a later time
+        alertDialog = LazyKt.lazy(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(homeActivity)
+                    .setTitle("Error Loading reddit posts")
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                    .setNegativeButton("retry", (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                        errorRetryRelay.call(null);
+                    });
+            return builder.create();
         });
 
     } //View init stuff
@@ -74,12 +71,6 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
     @Override
     public Observable<Void> refreshMenuClick() {
         return menuClicksObs.filter(menuItem -> menuItem.getItemId() == R.id.menu_refresh)
-                .map(menuItem -> null);
-    }
-
-    @Override
-    public Observable<Void> profileMenuClick() {
-        return menuClicksObs.filter(menuItem -> menuItem.getItemId() == R.id.menu_profile)
                 .map(menuItem -> null);
     }
 
@@ -98,6 +89,11 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
     public Observable<RedditItem> listItemClicks() {
         return postListAdapter.observeClicks()
                 .map(postListAdapter::getRedditItem);
+    }
+
+    @Override
+    public Observable<String> postAuthorClick() {
+        return postListAdapter.authorObserveClicks();
     }
 
     @Override

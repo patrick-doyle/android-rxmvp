@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.squareup.picasso.Picasso;
 import com.twistedequations.rxmvp.reddit.models.RedditItem;
@@ -21,7 +20,9 @@ public class PostListAdapter extends RecyclerView.Adapter<PostViewViewHolder> {
     private final Context context;
     private final Picasso picasso;
     private final ClicksSubscriber clicksSubscriber = new ClicksSubscriber();
+    private final AuthorSubscriber authorSubscriber = new AuthorSubscriber();
     private final Observable<Integer> clicks = Observable.create(clicksSubscriber).publish().autoConnect();
+    private final Observable<String> authorObservable = Observable.create(authorSubscriber).publish().autoConnect();
 
     public PostListAdapter(Context context, Picasso picasso) {
         this.context = context;
@@ -30,7 +31,7 @@ public class PostListAdapter extends RecyclerView.Adapter<PostViewViewHolder> {
 
     @Override
     public PostViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PostViewViewHolder(new ListItemViewPost(context), clicksSubscriber);
+        return new PostViewViewHolder(new ListItemViewPost(context), clicksSubscriber, authorSubscriber);
     }
 
     @Override
@@ -47,6 +48,10 @@ public class PostListAdapter extends RecyclerView.Adapter<PostViewViewHolder> {
         return clicks;
     }
 
+    public Observable<String> authorObserveClicks() {
+        return authorObservable;
+    }
+
     public RedditItem getRedditItem(int position) {
         return redditItems.get(position);
     }
@@ -57,20 +62,37 @@ public class PostListAdapter extends RecyclerView.Adapter<PostViewViewHolder> {
         notifyDataSetChanged();
     }
 
-    private static class ClicksSubscriber implements Observable.OnSubscribe<Integer>, AdapterView.OnItemClickListener {
+    public static class ClicksSubscriber implements Observable.OnSubscribe<Integer>, PositionClickListener {
 
         private Subscriber<? super Integer> subscriber;
 
         @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        public void call(Subscriber<? super Integer> subscriber) {
+            this.subscriber = subscriber;
+        }
+
+        @Override
+        public void onClick(View view, int position) {
             if (subscriber != null && !subscriber.isUnsubscribed()) {
                 subscriber.onNext(position);
             }
         }
+    }
+
+    public class AuthorSubscriber implements Observable.OnSubscribe<String>, PositionClickListener {
+
+        private Subscriber<? super String> subscriber;
 
         @Override
-        public void call(Subscriber<? super Integer> subscriber) {
+        public void call(Subscriber<? super String> subscriber) {
             this.subscriber = subscriber;
+        }
+
+        @Override
+        public void onClick(View view, int position) {
+            if (subscriber != null && !subscriber.isUnsubscribed()) {
+                subscriber.onNext(redditItems.get(position).author);
+            }
         }
     }
 }
