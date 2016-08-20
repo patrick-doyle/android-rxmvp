@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
@@ -36,6 +37,7 @@ public class DefaultHomeView extends FrameLayout implements HomeView {
     public DefaultHomeView(HomeActivity homeActivity, Picasso picasso) {
         super(homeActivity);
         //Inflate the layout into the viewgroup
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         inflate(getContext(), R.layout.activity_home, this);
 
         postListAdapter = new PostListAdapter(homeActivity, picasso);

@@ -9,4 +9,8 @@ public class LoginModel {
     public LoginModel(Activity activity) {
         this.activity = activity;
     }
+
+    public void finish() {
+        activity.finish();
+    }
 }

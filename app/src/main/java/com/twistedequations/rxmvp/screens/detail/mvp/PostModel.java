@@ -16,19 +16,19 @@ public class PostModel {
     private static final String COMMENTS_STATE_KEY = "comments";
 
     private final RedditService redditService;
-    private final PostActivity postActivity;
+    private final PostActivity activity;
 
     public PostModel(RedditService redditService, PostActivity postActivity) {
         this.redditService = redditService;
-        this.postActivity = postActivity;
+        this.activity = postActivity;
     }
 
     public RedditItem getIntentRedditItem() {
-        return postActivity.getIntent().getParcelableExtra(PostActivity.REDDIT_ITEM_KEY);
+        return activity.getIntent().getParcelableExtra(PostActivity.REDDIT_ITEM_KEY);
     }
 
     public Observable<List<RedditItem>> getCommentsFromState() {
-        return RxSaveState.getSavedState(postActivity)
+        return RxSaveState.getSavedState(activity)
                 .map(bundle -> bundle.getParcelableArrayList(COMMENTS_STATE_KEY));
     }
 
@@ -38,8 +38,12 @@ public class PostModel {
 
     public void saveComentsState(List<RedditItem> redditListings) {
         if(redditListings != null) {
-            RxSaveState.updateSaveState(postActivity, bundle ->
+            RxSaveState.updateSaveState(activity, bundle ->
                     bundle.putParcelableArrayList(COMMENTS_STATE_KEY, new ArrayList<>(redditListings)));
         }
+    }
+
+    public void finish() {
+        activity.finish();
     }
 }

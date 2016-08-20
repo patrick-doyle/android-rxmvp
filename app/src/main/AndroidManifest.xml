@@ -20,7 +20,8 @@
 
         <activity android:name=".screens.detail.PostActivity"/>
         <activity android:name=".screens.login.LoginActivity"/>
-        <activity android:name=".screens.profile.ProfileActivity"/>
+        <activity android:name=".screens.profile.ProfileActivity"
+            android:theme="@style/AppTheme.LightBackground"/>
 
     </application>
 

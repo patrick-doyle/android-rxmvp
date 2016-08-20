@@ -6,6 +6,8 @@ import rx.Observable;
 
 public interface LoginView {
 
+    Observable<Void> observableUpClicks();
+
     Observable<Void> loginObs();
 
     Observable<String> usernameTextObs();

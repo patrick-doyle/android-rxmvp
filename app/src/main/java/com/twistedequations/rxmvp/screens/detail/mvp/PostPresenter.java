@@ -27,10 +27,23 @@ public class PostPresenter {
 
     public void onCreate() {
         compositeSubscription.add(loadCommentsSubscriptions());
+        compositeSubscription.add(subscribeUpClicks());
+        loadIntentItem();
     }
 
     public void onDestroy() {
         compositeSubscription.clear();
+    }
+
+    private void loadIntentItem() {
+        //
+        RedditItem redditItem = postModel.getIntentRedditItem();
+        defaultPostView.setRedditItem(redditItem);
+    }
+
+    private Subscription subscribeUpClicks() {
+        return defaultPostView.observableUpClicks()
+                .subscribe(aVoid -> postModel.finish());
     }
 
     private Subscription loadCommentsSubscriptions() {

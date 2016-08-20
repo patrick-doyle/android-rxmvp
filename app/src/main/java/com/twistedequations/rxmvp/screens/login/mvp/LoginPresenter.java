@@ -22,10 +22,16 @@ public class LoginPresenter {
         compositeSubscription.add(subscribeLoginButton());
         compositeSubscription.add(subscribeUsernameText());
         compositeSubscription.add(subscribePasswordText());
+        compositeSubscription.add(subscribeUpClicks());
     }
 
     public void onDestroy() {
         compositeSubscription.clear();
+    }
+
+    private Subscription subscribeUpClicks() {
+        return view.observableUpClicks()
+                .subscribe(aVoid -> model.finish());
     }
 
     private Subscription subscribeLoginButton() {
